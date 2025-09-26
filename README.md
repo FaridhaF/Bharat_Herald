@@ -10,7 +10,7 @@ The project addresses six business requests:
    Identified the top 3 months with the sharpest month-over-month decline in net circulation.  
    **Output fields:** city_name, month (YYYY-MM), net_circulation  
    
-```sql
+<pre>
 WITH print_data AS (
     SELECT city,
            DATE_FORMAT(Date, '%Y-%m') AS month,
@@ -34,7 +34,8 @@ mom_decline AS (
     FROM last_month_data
     WHERE prev_month_circulation IS NOT NULL
 
-
+   **Result**
+   </pre>
 | City     | Month    | Net Circulation | Decline |
 |----------|---------|----------------|---------|
 | VARANASI | 2021-01 | 382K           | 60K     |
