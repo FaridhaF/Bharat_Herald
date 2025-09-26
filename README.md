@@ -2,6 +2,8 @@
 
 ## Project Overview
 This project analyzes Bharat Herald’s operational and financial data from 2019–2024 to provide insights for improving print performance and guiding digital transformation. The analysis focuses on trends in circulation, ad revenue, digital readiness, and pilot engagement across multiple cities.
+https://github.com/FaridhaF/Bharat_Herald/blob/main/BQ1.sql
+https://github.com/FaridhaF/Bharat_Herald/blob/main/ss1.jpg
 
 ## Ad-Hoc Requests & Analysis
 The project addresses six business requests:
