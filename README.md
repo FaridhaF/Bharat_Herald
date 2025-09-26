@@ -33,8 +33,6 @@ mom_decline AS (
            prev_month_circulation - net_circulation AS decline
     FROM last_month_data
     WHERE prev_month_circulation IS NOT NULL
-
-   **Result**
    </pre>
 | City     | Month    | Net Circulation | Decline |
 |----------|---------|----------------|---------|
