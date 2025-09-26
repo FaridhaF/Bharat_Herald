@@ -44,8 +44,7 @@ SELECT UPPER(city) AS city,
        CONCAT(ROUND(net_circulation/1000,0), "K") AS net_circulation,
        CONCAT(ROUND(decline/1000,0), "K") AS decline
 FROM mom_decline;
-
-![Result Screenshot](./ss1.jpg)
+(./ss1.jpg)
 
    2. **Yearly Revenue by Category**  
    Determined ad categories contributing over 50% of yearly revenue.  
