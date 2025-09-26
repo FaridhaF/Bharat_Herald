@@ -122,14 +122,14 @@ ranked_efficiency AS (
 )
 SELECT 
     UPPER(city_name) AS city_name,
-    CONCAT(ROUND(copies_printed_2024/1000000,2),"M") AS copies_printed_2024,
-    CONCAT(ROUND(net_circulation_2024/1000000,2),"M") AS net_circulation_2024,
+    CONCAT(ROUND(copies_printed_2024/1000000, 2), "M") AS copies_printed_2024,
+    CONCAT(ROUND(net_circulation_2024/1000000, 2), "M") AS net_circulation_2024,
     efficiency_ratio,
     efficiency_rank_2024
 FROM ranked_efficiency
 WHERE efficiency_rank_2024 <= 5
 ORDER BY efficiency_rank_2024;
-</pre>
+   </pre>
 **Report**
 | city_name  | copies_printed_2024 | net_circulation_2024 | efficiency_ratio | efficiency_rank_2024 |
 |------------|-------------------|--------------------|----------------|-------------------|
@@ -144,7 +144,7 @@ ORDER BY efficiency_rank_2024;
    Computed change in internet penetration from Q1 to Q4 2021.  
    **Output fields:** city_name, internet_rate_q1_2021, internet_rate_q4_2021, delta_internet_rate  
    **Query**
-   <pre>
+   '''
 	   SELECT 
     UPPER(city) AS city,
     MAX(CASE WHEN quarter = '2021-Q1' THEN internet_penetration END) AS internet_rate_q1_2021,
@@ -157,7 +157,7 @@ ON fcr.city_id=c.city_id
 WHERE quarter IN ('2021-Q1', '2021-Q4')
 GROUP BY city
 ORDER BY delta_internet_rate DESC
-</pre>
+'''
 **Report**
 | city       | internet_rate_q1_2021 | internet_rate_q4_2021 | delta_internet_rate |
 |------------|----------------------|----------------------|-------------------|
