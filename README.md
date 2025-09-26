@@ -45,7 +45,7 @@ SELECT UPPER(city) AS city,
        CONCAT(ROUND(decline/1000,0), "K") AS decline
 FROM mom_decline;
 
-```csv
+</pre>
 city,month,net_circulation,decline
 VARANASI,2021-01,382K,60K
 VARANASI,2019-11,432K,56K
