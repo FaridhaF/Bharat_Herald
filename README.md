@@ -2,8 +2,6 @@
 
 ## Project Overview
 This project analyzes Bharat Herald’s operational and financial data from 2019–2024 to provide insights for improving print performance and guiding digital transformation. The analysis focuses on trends in circulation, ad revenue, digital readiness, and pilot engagement across multiple cities.
-https://github.com/FaridhaF/Bharat_Herald/blob/main/BQ1.sql
-https://github.com/FaridhaF/Bharat_Herald/blob/main/ss1.jpg
 
 ## Ad-Hoc Requests & Analysis
 The project addresses six business requests:
@@ -12,11 +10,6 @@ The project addresses six business requests:
    Identified the top 3 months with the sharpest month-over-month decline in net circulation.  
    **Output fields:** city_name, month (YYYY-MM), net_circulation  
    
----
-
-### ✅ Result in README:
-It will render your SQL query with nice syntax highlighting, like this:
-
 ```sql
 WITH print_data AS
 (
@@ -52,9 +45,8 @@ SELECT UPPER(city) AS city,
        CONCAT(ROUND(decline/1000,0), "K") AS decline
 FROM mom_decline;
 
-
-   - 📄 (./BQ1.sql)  
-   - 🖼️ ![Result Screenshot](./ss1.jpg)
+https://github.com/FaridhaF/Bharat_Herald/blob/main/ss1.jpg
+   
 
 
 2. **Yearly Revenue by Category**  
