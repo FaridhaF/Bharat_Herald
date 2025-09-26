@@ -144,20 +144,22 @@ ORDER BY efficiency_rank_2024;
    Computed change in internet penetration from Q1 to Q4 2021.  
    **Output fields:** city_name, internet_rate_q1_2021, internet_rate_q4_2021, delta_internet_rate  
    **Query**
-   '''
+   <pre>
 	   SELECT 
     UPPER(city) AS city,
     MAX(CASE WHEN quarter = '2021-Q1' THEN internet_penetration END) AS internet_rate_q1_2021,
     MAX(CASE WHEN quarter = '2021-Q4' THEN internet_penetration END) AS internet_rate_q4_2021,
-    ROUND((MAX(CASE WHEN quarter = '2021-Q4' THEN internet_penetration END) - 
-     MAX(CASE WHEN quarter = '2021-Q1' THEN internet_penetration END)),2) AS delta_internet_rate
+    ROUND(
+        (MAX(CASE WHEN quarter = '2021-Q4' THEN internet_penetration END) - 
+         MAX(CASE WHEN quarter = '2021-Q1' THEN internet_penetration END)), 2
+    ) AS delta_internet_rate
 FROM fact_city_readiness fcr
 JOIN dim_city c
-ON fcr.city_id=c.city_id
+    ON fcr.city_id = c.city_id
 WHERE quarter IN ('2021-Q1', '2021-Q4')
 GROUP BY city
-ORDER BY delta_internet_rate DESC
-'''
+ORDER BY delta_internet_rate DESC;
+   </pre>
 **Report**
 | city       | internet_rate_q1_2021 | internet_rate_q4_2021 | delta_internet_rate |
 |------------|----------------------|----------------------|-------------------|
@@ -203,41 +205,41 @@ Decline_Data AS (
         LAG(Ad_Revenue) OVER(PARTITION BY city_name ORDER BY Year) AS Prev_Ad_Revenue
     FROM Yearly_Data
 ),
-Final_conclusion AS
-(
-SELECT 
-    city_name,
-    Year,
-    Net_circulation,
-    Ad_Revenue,
-    CASE 
-        WHEN Net_Circulation < Prev_Net_circulation THEN 'Yes' 
-        ELSE 'No' 
-    END AS is_declining_print,
-    CASE 
-        WHEN Ad_Revenue < Prev_Ad_Revenue THEN 'Yes' 
-        ELSE 'No' 
-    END AS is_declining_ad_revenue
-FROM Decline_Data
+Final_conclusion AS (
+    SELECT 
+        city_name,
+        Year,
+        Net_circulation,
+        Ad_Revenue,
+        CASE 
+            WHEN Net_Circulation < Prev_Net_circulation THEN 'Yes' 
+            ELSE 'No' 
+        END AS is_declining_print,
+        CASE 
+            WHEN Ad_Revenue < Prev_Ad_Revenue THEN 'Yes' 
+            ELSE 'No' 
+        END AS is_declining_ad_revenue
+    FROM Decline_Data
 ),
-final_report AS
-(
-SELECT upper(city_name) as city_name,
-	   Year,
-       CONCAT(ROUND(Net_Circulation/1000000,0),"M") AS Yearly_Net_Circulation,
-       CONCAT(ROUND(Ad_Revenue/1000000,0),"M") AS Yearly_Ad_Revenue,
-       is_declining_print,
-       is_declining_ad_revenue,
-       CASE
-       WHEN is_declining_print = "Yes" AND is_declining_ad_revenue="Yes" THEN "YES"
-       ELSE "No"
-       END AS is_declining_both
-FROM Final_conclusion
+final_report AS (
+    SELECT 
+        UPPER(city_name) AS city_name,
+        Year,
+        CONCAT(ROUND(Net_Circulation/1000000, 0), "M") AS Yearly_Net_Circulation,
+        CONCAT(ROUND(Ad_Revenue/1000000, 0), "M") AS Yearly_Ad_Revenue,
+        is_declining_print,
+        is_declining_ad_revenue,
+        CASE
+            WHEN is_declining_print = 'Yes' AND is_declining_ad_revenue = 'Yes' THEN 'YES'
+            ELSE 'No'
+        END AS is_declining_both
+    FROM Final_conclusion
 )
-SELECT * FROM final_report
-WHERE is_declining_both="Yes"
-order by city_name,year
-</pre>
+SELECT * 
+FROM final_report
+WHERE is_declining_both = 'Yes'
+ORDER BY city_name, Year;
+   </pre>
 **Report**
 | city_name  | Year | Yearly_Net_Circulation | Yearly_Ad_Revenue | is_declining_print | is_declining_ad_revenue | is_declining_both |
 |------------|------|-----------------------|-----------------|------------------|------------------------|-----------------|
@@ -272,32 +274,32 @@ order by city_name,year
    **Output fields:** city_name, readiness_score_2021, engagement_metric_2021, readiness_rank_desc, engagement_rank_asc, is_outlier  
    **Query**
    <pre>
-	   WITH digital_pilot AS
-(
-    SELECT dc.city,
-           SUM(fdp.downloads_or_accesses * (1 - fdp.avg_bounce_rate/100.0)) AS active_users
+	   WITH digital_pilot AS (
+    SELECT 
+        dc.city,
+        SUM(fdp.downloads_or_accesses * (1 - fdp.avg_bounce_rate/100.0)) AS active_users
     FROM fact_digital_pilot fdp
     JOIN dim_city dc
-      ON fdp.city_id = dc.city_id
+        ON fdp.city_id = dc.city_id
     GROUP BY dc.city
 ),
-engagement_ranked AS
-(
-    SELECT city,
-           ROUND(active_users/1000,0) AS active_users_k,
-           CONCAT(ROUND(active_users/1000,0), 'K') AS engagement_metric_2021,
-           RANK() OVER (ORDER BY active_users ASC) AS engagement_rank_asc
+engagement_ranked AS (
+    SELECT 
+        city,
+        ROUND(active_users/1000, 0) AS active_users_k,
+        CONCAT(ROUND(active_users/1000, 0), 'K') AS engagement_metric_2021,
+        RANK() OVER (ORDER BY active_users ASC) AS engagement_rank_asc
     FROM digital_pilot
 ),
-readiness AS
-(
-    SELECT dc.city,
-           ROUND(AVG(literacy_rate + smartphone_penetration + internet_penetration)/3, 0) AS readiness_score_2021,
-           RANK() OVER (ORDER BY ROUND(AVG(literacy_rate + smartphone_penetration + internet_penetration)/3, 0) DESC) AS readiness_rank_desc
+readiness AS (
+    SELECT 
+        dc.city,
+        ROUND(AVG(literacy_rate + smartphone_penetration + internet_penetration)/3, 0) AS readiness_score_2021,
+        RANK() OVER (ORDER BY ROUND(AVG(literacy_rate + smartphone_penetration + internet_penetration)/3, 0) DESC) AS readiness_rank_desc
     FROM fact_city_readiness fcr
     JOIN dim_city dc 
-      ON fcr.city_id = dc.city_id
-    WHERE LEFT(quarter, 4) = "2021"
+        ON fcr.city_id = dc.city_id
+    WHERE LEFT(quarter, 4) = '2021'
     GROUP BY dc.city
 )
 SELECT 
@@ -312,9 +314,9 @@ SELECT
     END AS is_outlier
 FROM readiness r
 JOIN engagement_ranked e
-  ON r.city = e.city
+    ON r.city = e.city
 ORDER BY e.engagement_rank_asc;
-</pre>
+   </pre>
 **Report**
 | city_name  | readiness_score_2021 | engagement_metric_2021 | readiness_rank_desc | engagement_rank_asc | is_outlier |
 |------------|--------------------|-----------------------|-------------------|-------------------|-----------|
