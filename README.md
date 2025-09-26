@@ -144,7 +144,7 @@ ORDER BY efficiency_rank_2024;
    Computed change in internet penetration from Q1 to Q4 2021.  
    **Output fields:** city_name, internet_rate_q1_2021, internet_rate_q4_2021, delta_internet_rate  
    **Query**
-   <pre>
+<pre>
 	SELECT 
     UPPER(city) AS city,
     MAX(CASE WHEN quarter = '2021-Q1' THEN internet_penetration END) AS internet_rate_q1_2021,
@@ -179,7 +179,7 @@ ORDER BY delta_internet_rate DESC;
    Identified cities with declining circulation and ad revenue over six years.  
    **Output fields:** city_name, year, yearly_net_circulation, yearly_ad_revenue, is_declining_print, is_declining_ad_revenue, is_declining_both 
    **Query**
-   <pre>
+<pre>
 	WITH Yearly_Data AS (
     SELECT 
         c.city AS city_name,
