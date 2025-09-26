@@ -98,8 +98,8 @@ ORDER BY year, pct_of_year_total DESC;
    Ranked cities by print efficiency (net_circulation / copies_printed).  
    **Output fields:** city_name, copies_printed_2024, net_circulation_2024, efficiency_ratio, efficiency_rank_2024  
    **Query**
-   <pre>
-	   WITH city_efficiency AS (
+<pre>
+	WITH city_efficiency AS (
     SELECT 
         c.city AS city_name,
         SUM(fps.copies_sold + fps.copies_returned) AS copies_printed_2024,
@@ -129,7 +129,7 @@ SELECT
 FROM ranked_efficiency
 WHERE efficiency_rank_2024 <= 5
 ORDER BY efficiency_rank_2024;
-   </pre>
+</pre>
 **Report**
 | city_name  | copies_printed_2024 | net_circulation_2024 | efficiency_ratio | efficiency_rank_2024 |
 |------------|-------------------|--------------------|----------------|-------------------|
@@ -145,7 +145,7 @@ ORDER BY efficiency_rank_2024;
    **Output fields:** city_name, internet_rate_q1_2021, internet_rate_q4_2021, delta_internet_rate  
    **Query**
    <pre>
-	   SELECT 
+	SELECT 
     UPPER(city) AS city,
     MAX(CASE WHEN quarter = '2021-Q1' THEN internet_penetration END) AS internet_rate_q1_2021,
     MAX(CASE WHEN quarter = '2021-Q4' THEN internet_penetration END) AS internet_rate_q4_2021,
@@ -159,7 +159,7 @@ JOIN dim_city c
 WHERE quarter IN ('2021-Q1', '2021-Q4')
 GROUP BY city
 ORDER BY delta_internet_rate DESC;
-   </pre>
+</pre>
 **Report**
 | city       | internet_rate_q1_2021 | internet_rate_q4_2021 | delta_internet_rate |
 |------------|----------------------|----------------------|-------------------|
@@ -180,7 +180,7 @@ ORDER BY delta_internet_rate DESC;
    **Output fields:** city_name, year, yearly_net_circulation, yearly_ad_revenue, is_declining_print, is_declining_ad_revenue, is_declining_both 
    **Query**
    <pre>
-	   WITH Yearly_Data AS (
+	WITH Yearly_Data AS (
     SELECT 
         c.city AS city_name,
         YEAR(d.date) AS Year,
@@ -239,7 +239,7 @@ SELECT *
 FROM final_report
 WHERE is_declining_both = 'Yes'
 ORDER BY city_name, Year;
-   </pre>
+</pre>
 **Report**
 | city_name  | Year | Yearly_Net_Circulation | Yearly_Ad_Revenue | is_declining_print | is_declining_ad_revenue | is_declining_both |
 |------------|------|-----------------------|-----------------|------------------|------------------------|-----------------|
@@ -273,8 +273,8 @@ ORDER BY city_name, Year;
    Highlighted cities with high digital readiness but low pilot engagement.  
    **Output fields:** city_name, readiness_score_2021, engagement_metric_2021, readiness_rank_desc, engagement_rank_asc, is_outlier  
    **Query**
-   <pre>
-	   WITH digital_pilot AS (
+<pre>
+	WITH digital_pilot AS (
     SELECT 
         dc.city,
         SUM(fdp.downloads_or_accesses * (1 - fdp.avg_bounce_rate/100.0)) AS active_users
@@ -316,7 +316,7 @@ FROM readiness r
 JOIN engagement_ranked e
     ON r.city = e.city
 ORDER BY e.engagement_rank_asc;
-   </pre>
+</pre>
 **Report**
 | city_name  | readiness_score_2021 | engagement_metric_2021 | readiness_rank_desc | engagement_rank_asc | is_outlier |
 |------------|--------------------|-----------------------|-------------------|-------------------|-----------|
