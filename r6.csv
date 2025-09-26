@@ -1,0 +1,11 @@
+city_name,readiness_score_2021,engagement_metric_2021,readiness_rank_desc,engagement_rank_asc,is_outlier
+KANPUR,75,9K,1,1,Yes
+RANCHI,69,10K,7,2,No
+JAIPUR,55,19K,10,3,No
+VARANASI,74,22K,2,4,No
+PATNA,71,22K,6,5,No
+MUMBAI,68,26K,8,6,No
+LUCKNOW,73,29K,3,7,No
+DELHI,56,31K,9,8,No
+BHOPAL,73,33K,3,9,No
+AHMEDABAD,72,36K,5,10,No
