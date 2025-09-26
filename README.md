@@ -44,7 +44,7 @@ SELECT UPPER(city) AS city,
 	   month,
        CONCAT(ROUND(net_circulation/1000,0),"K") as net_circulation,
        CONCAT(ROUND(decline/1000,0),"K") AS decline
-FROM mom_decline
+FROM mom_decline;
 </pre>
 **Report**
 | City     | Month    | Net Circulation | Decline |
@@ -100,7 +100,7 @@ ORDER BY year, pct_of_year_total DESC;
    **Query**
 <pre>
 	WITH city_efficiency AS (
-    SELECT 
+    	SELECT 
         c.city AS city_name,
         SUM(fps.copies_sold + fps.copies_returned) AS copies_printed_2024,
         SUM(fps.net_circulation) AS net_circulation_2024,
@@ -112,7 +112,7 @@ ORDER BY year, pct_of_year_total DESC;
     GROUP BY c.city
 ),
 ranked_efficiency AS (
-    SELECT 
+   		SELECT 
         city_name,
         copies_printed_2024,
         net_circulation_2024,
