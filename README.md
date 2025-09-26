@@ -10,7 +10,12 @@ The project addresses six business requests:
 
 1. **Monthly Circulation Drop**  
    Identified the top 3 months with the sharpest month-over-month decline in net circulation.  
+
    **Output fields:** city_name, month (YYYY-MM), net_circulation  
+
+   - 📄 [SQL Query](./BQ1.sql)  
+   - 🖼️ ![Result Screenshot](./ss1.jpg)
+
 
 2. **Yearly Revenue by Category**  
    Determined ad categories contributing over 50% of yearly revenue.  
