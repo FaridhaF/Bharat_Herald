@@ -45,11 +45,9 @@ SELECT UPPER(city) AS city,
        CONCAT(ROUND(decline/1000,0), "K") AS decline
 FROM mom_decline;
 
-https://github.com/FaridhaF/Bharat_Herald/blob/main/ss1.jpg
-   
+![Result Screenshot](https://github.com/FaridhaF/Bharat_Herald/blob/main/ss1.jpg)
 
-
-2. **Yearly Revenue by Category**  
+   2. **Yearly Revenue by Category**  
    Determined ad categories contributing over 50% of yearly revenue.  
    **Output fields:** year, category_name, category_revenue, total_revenue_year, pct_of_year_total  
 
